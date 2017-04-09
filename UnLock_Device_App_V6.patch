@@ -1,0 +1,84 @@
+diff --git a/UnLock_Device_App_V6/AndroidManifest.xml b/UnLock_Device_App_V6/AndroidManifest.xml
+index efe5b76..2ef202a 100644
+--- a/UnLock_Device_App_V6/AndroidManifest.xml
++++ b/UnLock_Device_App_V6/AndroidManifest.xml
+@@ -1,5 +1,5 @@
+ <?xml version="1.0" encoding="utf-8" standalone="no"?>
+-<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:sharedUserId="android.uid.system" package="com.asus.unlock">
++<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.asus.unlock">
+     <uses-permission android:name="android.permission.INTERNET"/>
+     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+diff --git a/UnLock_Device_App_V6/smali/com/asus/unlock/DMServerUnlock.smali b/UnLock_Device_App_V6/smali/com/asus/unlock/DMServerUnlock.smali
+index 5d25b6f..13c0a80 100644
+--- a/UnLock_Device_App_V6/smali/com/asus/unlock/DMServerUnlock.smali
++++ b/UnLock_Device_App_V6/smali/com/asus/unlock/DMServerUnlock.smali
+@@ -1254,11 +1254,13 @@
+ 
+ # virtual methods
+ .method public getDMServerUnlockStatus()I
+-    .locals 5
++    .locals 6
+ 
+     .prologue
+     const/16 v4, 0x1e
+ 
++    const/16 v5, 0x1
++
+     const/16 v1, 0xa
+ 
+     .line 84
+@@ -1292,7 +1294,7 @@
+     .end local v0    # "numUnlock":I
+     :cond_0
+     :goto_0
+-    return v1
++    return v5
+ 
+     .line 88
+     .restart local v0    # "numUnlock":I
+diff --git a/UnLock_Device_App_V6/smali/com/asus/unlock/UnLockFlagAndReboot.smali b/UnLock_Device_App_V6/smali/com/asus/unlock/UnLockFlagAndReboot.smali
+index 53ae0d0..06f52e5 100644
+--- a/UnLock_Device_App_V6/smali/com/asus/unlock/UnLockFlagAndReboot.smali
++++ b/UnLock_Device_App_V6/smali/com/asus/unlock/UnLockFlagAndReboot.smali
+@@ -4,11 +4,11 @@
+ 
+ 
+ # static fields
+-.field private static final MISC_PATH:Ljava/lang/String; = "/dev/block/mmcblk0p3"
++.field private static final MISC_PATH:Ljava/lang/String; = "/sdcard/data_mmcblk0p3"
+ 
+ .field private static final TAG:Ljava/lang/String; = "UnLockFlagAndReboot"
+ 
+-.field private static final USB_PATH:Ljava/lang/String; = "/dev/block/mmcblk0p4"
++.field private static final USB_PATH:Ljava/lang/String; = "/sdcard/data_mmcblk0p4"
+ 
+ 
+ # instance fields
+@@ -174,7 +174,7 @@
+     :try_start_0
+     new-instance v6, Ljava/io/FileOutputStream;
+ 
+-    const-string v8, "/dev/block/mmcblk0p3"
++    const-string v8, "/sdcard/data_mmcblk0p3"
+ 
+     invoke-direct {v6, v8}, Ljava/io/FileOutputStream;-><init>(Ljava/lang/String;)V
+     :try_end_0
+@@ -191,7 +191,7 @@
+     .line 66
+     new-instance v5, Ljava/io/FileOutputStream;
+ 
+-    const-string v8, "/dev/block/mmcblk0p4"
++    const-string v8, "/sdcard/data_mmcblk0p4"
+ 
+     invoke-direct {v5, v8}, Ljava/io/FileOutputStream;-><init>(Ljava/lang/String;)V
+     :try_end_1
+@@ -363,7 +363,7 @@
+     :try_start_0
+     new-instance v2, Ljava/io/FileReader;
+ 
+-    const-string v5, "/dev/block/mmcblk0p3"
++    const-string v5, "/sdcard/data_mmcblk0p3"
+ 
+     invoke-direct {v2, v5}, Ljava/io/FileReader;-><init>(Ljava/lang/String;)V
+     :try_end_0
